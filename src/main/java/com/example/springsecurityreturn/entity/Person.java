@@ -21,6 +21,9 @@ public class Person {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "year_of_birth")
     private int yearOfBirth;
 
