@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
-  Hello World!!!
+Hello World!!!
+<br>
+<!--при работе csrf разлогирование только с помощью POST запроса-->
+<a  href="/logout">
+    Logout
+</a>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Logout">
+</form>
 </body>
 </html>

@@ -2,9 +2,11 @@ package com.example.springsecurityreturn.security;
 
 import com.example.springsecurityreturn.entity.Person;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 //Обертка над сущностью
 //Реализует стандартизированный интерфейс
@@ -23,7 +25,9 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        //возвращение листа из одного элемента обозначающего роль
+        //можно в лист передавать либо роль, либо позволительные действия
+        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
     }
 
     @Override
