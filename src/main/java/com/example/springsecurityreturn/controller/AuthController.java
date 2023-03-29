@@ -32,13 +32,12 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("person") Person person) {
-
+    public String registrationPage(@ModelAttribute("user") Person person) {
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("person") @Valid Person person,
+    public String performRegistration(@ModelAttribute("user") @Valid Person person,
                                       //an error is placed here
                                       BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);

@@ -4,6 +4,7 @@ import com.example.springsecurityreturn.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity //указывает на то, что конфигурационный класс SpringSecurity
+//it permits use @PreAuthorise, SS will check role before executing method
+//usually uses in services
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PersonDetailsService personDetailsService;
@@ -42,10 +46,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //"ADMIN_ROLE" понимается как "ADMIN" автоматически SpSec
                 //возможна работа не с ролью, а с Authorities
                 //list of actions which user can do
+                /**можно удалить и настраивать доступ к методам аннотацией
+                 * @PreAuthorise*/
                 .antMatchers("/admin").hasRole("ADMIN")
+
                 //страницы доступные всем
                 .antMatchers(allowedPages).permitAll()
                 //для получения остальных страниц и пользователем и админом
+                //can be deleted if will use @PreAuthorise and
+                //@EnableGlobalMethodSecurity(prePostEnabled = true)
+                //and mb something else
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 //остальные запросы недоступны
                 /*.anyRequest().authenticated()*/ //при отсутствии admin ограничений
